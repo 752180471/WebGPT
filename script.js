@@ -6,10 +6,7 @@ const max_tokens = 500;
 const apiKey = localStorage.getItem('apiKey'); // Your OpenAI API Key
 const url = `https://api.openai.com/v1/chat/completions`;
 
-if (!apiKey) {
-  console.error("API Key is missing.");
-  return;  // 结束函数，避免继续发送请求
-}
+
 
 let prompt = [
   `You are a web chat bot inside of the website: https://example.com`,
@@ -36,7 +33,12 @@ inputField.addEventListener('keyup', (event) => {
 function sendMessage() {
   const userMessage = inputField.value;
   inputField.value = ''; // Clear the input field
-
+  
+if (!apiKey) {
+  console.error("API Key is missing.");
+  return;  // 结束函数，避免继续发送请求
+}
+  
   // Display the user's message in the chat container
   const userMessageElement = document.createElement('div');
   userMessageElement.classList.add('message', 'user-message');
