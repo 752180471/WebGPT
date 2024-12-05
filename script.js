@@ -29,7 +29,8 @@ sendButton.addEventListener('click', () => {
 
 inputField.addEventListener('keyup', (event) => {
   if (event.keyCode === 13) {
-    sendMessage(inputField.value);
+    const message = inputField.value
+    sendMessage(message);
   }
 });
 
