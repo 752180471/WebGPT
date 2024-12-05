@@ -30,52 +30,26 @@ inputField.addEventListener('keyup', (event) => {
   }
 });
 
-function sendMessage() {
-  const userMessage = inputField.value;
-  inputField.value = ''; // Clear the input field
-  
-if (!apiKey) {
-  console.error("API Key is missing.");
-  return;  // 结束函数，避免继续发送请求
+
+const apiURLToText = 'https://api.openai.com/v1/chat/completions';
+
+async function sendMessages(inputField.value) {
+    const data = await fetch(apiURLToText, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            n: 1,
+            model: "gpt-3.5-turbo",
+            messages: [
+                { "role": "system", "content": "Make 720 Great Again" },
+                { "role": "user", "content": `${message}` }
+            ]
+        })
+    }).then(res => res.json()).catch(reason => reason);
+
+    textContent.textContent = data?.choices?.[0]?.message?.content || data?.error?.message;
 }
-  
-  // Display the user's message in the chat container
-  const userMessageElement = document.createElement('div');
-  userMessageElement.classList.add('message', 'user-message');
-  userMessageElement.innerHTML = `<span><img src="images/user-avatar.jpg"> <b>You</b></span>`;
 
-  const userMessageText = document.createElement('p');
-  userMessageText.innerText = userMessage;
-  userMessageElement.appendChild(userMessageText);
-  chatContainer.appendChild(userMessageElement);
-
-  // 拼接用户消息到 prompt
-  const promptWithUserMessage = prompt + "\n" + userMessage;
-
-  // 设置请求体
-  options.body = JSON.stringify({
-    prompt: promptWithUserMessage,
-    model,
-    max_tokens,
-    stop: null,  // 处理停止符
-  });
-
-  // 发送请求到 OpenAI API
-  fetch(url, options)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      const aiMessage = data.choices[0].message.content; // 获取 AI 消息
-
-      // Display the AI's response in the chat container
-      const aiMessageElement = document.createElement('div');
-      aiMessageElement.classList.add('message', 'ai-message');
-      aiMessageElement.innerHTML = `<span id="ai-avatar-name"><img src="images/openai-avatar.png"> <b>WebGPT</b></span>`;
-
-      const aiMessageText = document.createElement('p');
-      aiMessageText.innerText = aiMessage;
-      aiMessageElement.appendChild(aiMessageText);
-      chatContainer.appendChild(aiMessageElement);
-    })
-    .catch((error) => console.log(error));
-}
