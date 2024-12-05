@@ -22,18 +22,21 @@ const options = {
   },
 };
 
-sendButton.addEventListener('click', sendMessage);
+sendButton.addEventListener('click', () => {
+  const message = inputField.value;
+  sendMessages(message);
+});
 
 inputField.addEventListener('keyup', (event) => {
   if (event.keyCode === 13) {
-    sendMessage();
+    sendMessage(inputField.value);
   }
 });
 
 
 const apiURLToText = 'https://api.openai.com/v1/chat/completions';
 
-async function sendMessages(inputField.value) {
+async function sendMessages(message) {
     const data = await fetch(apiURLToText, {
         method: "POST",
         headers: {
