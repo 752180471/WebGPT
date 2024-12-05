@@ -1,7 +1,7 @@
 const inputField = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const chatContainer = document.getElementById('chat-container');
-const model = 'gpt-3.5-turbo';
+const model = 'gpt-3.5-turbo-0125';
 const max_tokens = 500;
 const apiKey = localStorage.getItem('apiKey');; // Your OpenAI API Key
 const stop = '';
