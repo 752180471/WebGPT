@@ -5,6 +5,7 @@ const model = 'gpt-3.5-turbo-0125';
 const max_tokens = 500;
 const apiKey = localStorage.getItem('apiKey'); // Your OpenAI API Key
 const url = `https://api.openai.com/v1/chat/completions`;
+const textContent=document.getElementById("chat-container")
 
 
 
